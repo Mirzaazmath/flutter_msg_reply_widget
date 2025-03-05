@@ -10,23 +10,77 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
-  List<ChatModel>chats=[
-    ChatModel(isSender: true, msg: "Hello", name: "Mirza", id: 0, time: "12:00 PM"),
-    ChatModel(isSender: false, msg: "Hi", name: "Anand", id: 1, time: "12:01 PM"),
-    ChatModel(isSender: true, msg: "How are you ?", name: "Mirza", id: 2, time: "12:02 PM"),
-    ChatModel(isSender: false, msg: "Fine What about you?", name: "Anand", id: 3, time: "12:03 PM"),
-    ChatModel(isSender: true, msg: "Great!", name: "Mirza", id: 4, time: "12:04 PM"),
-    ChatModel(isSender: false, msg: "Any Updates", name: "Anand", id: 5, time: "12:05 PM"),
-    ChatModel(isSender: true, msg: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.", name: "Mirza", id: 6, time: "12:07 PM"),
-    ChatModel(isSender: false, msg: "Oh!", name: "Anand", id: 7, time: "12:08 PM"),
-    ChatModel(isSender: true, msg: "Yes I know its Long ", name: "Mirza", id: 8, time: "12:09 PM"),
-    ChatModel(isSender: false, msg: "No Problem, I will do the rest don't worries", name: "Anand", id: 9, time: "12:10 PM"),
-    ChatModel(isSender: true, msg: "Thanks Bye", name: "Mirza", id: 10, time: "12:12 PM"),
-    ChatModel(isSender: false, msg: "Bye", name: "Anand", id: 11, time: "12:15 PM"),
+  // List Of Chats
+  List<ChatModel> chats = [
+    ChatModel(
+        isSender: true, msg: "Hello", name: "Mirza", id: 0, time: "12:00 PM"),
+    ChatModel(
+        isSender: false, msg: "Hi", name: "Anand", id: 1, time: "12:01 PM"),
+    ChatModel(
+        isSender: true,
+        msg: "How are you ?",
+        name: "Mirza",
+        id: 2,
+        time: "12:02 PM"),
+    ChatModel(
+        isSender: false,
+        msg: "Fine What about you?",
+        name: "Anand",
+        id: 3,
+        time: "12:03 PM"),
+    ChatModel(
+        isSender: true, msg: "Great!", name: "Mirza", id: 4, time: "12:04 PM"),
+    ChatModel(
+        isSender: false,
+        msg: "Any Updates",
+        name: "Anand",
+        id: 5,
+        time: "12:05 PM"),
+    ChatModel(
+        isSender: true,
+        msg:
+            "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+        name: "Mirza",
+        id: 6,
+        time: "12:07 PM"),
+    ChatModel(
+        isSender: false, msg: "Oh!", name: "Anand", id: 7, time: "12:08 PM"),
+    ChatModel(
+        isSender: true,
+        msg: "Yes I know its Long ",
+        name: "Mirza",
+        id: 8,
+        time: "12:09 PM"),
+    ChatModel(
+        isSender: false,
+        msg: "No Problem, I will do the rest don't worries",
+        name: "Anand",
+        id: 9,
+        time: "12:10 PM"),
+    ChatModel(
+        isSender: true,
+        msg: "Thanks Bye",
+        name: "Mirza",
+        id: 10,
+        time: "12:12 PM"),
+    ChatModel(
+        isSender: false, msg: "Bye", name: "Anand", id: 11, time: "12:15 PM"),
   ];
+  // Created a variable to handle rely msg
   ChatModel? selectedChat;
+  // Created  FocusNode for Keyboard
   FocusNode focusNode = FocusNode();
+  // Created  TextEditingController for text
   TextEditingController _controller = TextEditingController();
+
+  // Disposing all Controllers
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    _controller.dispose();
+    focusNode.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -94,19 +148,22 @@ class _ChatScreenState extends State<ChatScreen> {
                     itemCount: chats.length,
                     itemBuilder: (context, index) {
                       return SwipeWidget(
-                        onSwipeLeft: (){
+                        onSwipeLeft: () {
                           focusNode.requestFocus();
                           setState(() {
-                            selectedChat =chats[index];
+                            selectedChat = chats[index];
                           });
                           print("Hello");
                         },
                         child: Row(
-                          mainAxisAlignment:chats[index].isSender ? MainAxisAlignment.end: MainAxisAlignment.start,
+                          mainAxisAlignment: chats[index].isSender
+                              ? MainAxisAlignment.end
+                              : MainAxisAlignment.start,
                           children: [
                             Container(
                               constraints: BoxConstraints(
-                                maxWidth: MediaQuery.sizeOf(context).width * 0.8,
+                                maxWidth:
+                                    MediaQuery.sizeOf(context).width * 0.8,
                               ),
                               margin: const EdgeInsets.symmetric(vertical: 10),
                               padding: const EdgeInsets.symmetric(
@@ -124,21 +181,11 @@ class _ChatScreenState extends State<ChatScreen> {
                                     : Colors.white,
                               ),
                               child: Column(
-
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 children: [
-                                  chats[index].isRely==true? Container(
-                                    width: double.infinity,
-                                    padding: const EdgeInsets.all(10),
-                                    margin: const EdgeInsets.only(bottom: 10),
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
-                                        border: const Border(left: BorderSide(color: Colors.deepPurple,width: 3)),
-                                        color: Colors.grey.shade100
-                                    ),
-                                    child: Text(chats[index].parentMsg??"",maxLines: 3,),
-
-                                  ):const SizedBox(),
+                                  chats[index].isRely == true
+                                      ?  _buildReplyWidget(chats[index].parentMsg ?? "",)
+                                      : const SizedBox(),
                                   Text(chats[index].msg),
                                   Text(
                                     chats[index].time,
@@ -163,31 +210,26 @@ class _ChatScreenState extends State<ChatScreen> {
                           color: Colors.white),
                       child: Column(
                         children: [
-                          selectedChat!=null?  Stack(
-                            alignment: Alignment.topRight,
-                            children: [
-                              Container(
-                                width: double.infinity,
-                                padding: const EdgeInsets.all(10),
-                                margin: const EdgeInsets.symmetric(vertical: 10),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  border: const Border(left: BorderSide(color: Colors.deepPurple,width: 3)),
-                                  color: Colors.grey.shade100
-                                ),
-                                child: Text(selectedChat!.msg,maxLines: 3,),
-
-                              ),
-                              IconButton(
-                                padding:EdgeInsets.zero,
-                                  onPressed: (){
-                                  setState(() {
-                                    selectedChat=null;
-                                    focusNode.unfocus();
-                                  });
-                                  }, icon:const  Icon(Icons.close,size: 20,)),
-                            ],
-                          ):const SizedBox(),
+                          selectedChat != null
+                              ? Stack(
+                                  alignment: Alignment.topRight,
+                                  children: [
+                                    _buildReplyWidget(selectedChat!.msg,),
+                                    IconButton(
+                                        padding: EdgeInsets.zero,
+                                        onPressed: () {
+                                          setState(() {
+                                            selectedChat = null;
+                                            focusNode.unfocus();
+                                          });
+                                        },
+                                        icon: const Icon(
+                                          Icons.close,
+                                          size: 20,
+                                        )),
+                                  ],
+                                )
+                              : const SizedBox(),
                           Row(
                             children: [
                               const Icon(Icons.account_balance_wallet_outlined),
@@ -196,10 +238,10 @@ class _ChatScreenState extends State<ChatScreen> {
                               ),
                               Expanded(
                                   child: TextFormField(
-                                    controller: _controller,
-                                    focusNode: focusNode,
-                                decoration:
-                                    const InputDecoration(border: InputBorder.none),
+                                controller: _controller,
+                                focusNode: focusNode,
+                                decoration: const InputDecoration(
+                                    border: InputBorder.none),
                               )),
                               const SizedBox(
                                 width: 10,
@@ -220,11 +262,20 @@ class _ChatScreenState extends State<ChatScreen> {
                     ),
                   ),
                   GestureDetector(
-                    onTap: (){
+                    onTap: () {
                       setState(() {
-                        chats.add( ChatModel(isSender: true, msg: _controller.text, name: "Mirza", id: 0, time: "12:00 PM",isRely: true,parentMsg:selectedChat?.msg??"" ),);
+                        chats.add(
+                          ChatModel(
+                              isSender: true,
+                              msg: _controller.text,
+                              name: "Mirza",
+                              id: 0,
+                              time: "12:00 PM",
+                              isRely: true,
+                              parentMsg: selectedChat?.msg ?? ""),
+                        );
                         focusNode.unfocus();
-                        selectedChat=null;
+                        selectedChat = null;
                         _controller.clear();
                       });
                     },
@@ -242,6 +293,23 @@ class _ChatScreenState extends State<ChatScreen> {
             )
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _buildReplyWidget(String msg) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(10),
+      margin: const EdgeInsets.symmetric(vertical: 10),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          border: const Border(
+              left: BorderSide(color: Colors.deepPurple, width: 3)),
+          color: Colors.grey.shade100),
+      child: Text(
+        msg,
+        maxLines: 3,
       ),
     );
   }
